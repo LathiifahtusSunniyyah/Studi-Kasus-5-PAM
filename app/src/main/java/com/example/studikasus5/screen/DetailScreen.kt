@@ -1,4 +1,4 @@
-package com.example.studikasus5
+package com.example.studikasus5.screen
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*

@@ -1,4 +1,4 @@
-package com.example.studikasus5
+package com.example.studikasus5.ui.theme
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -11,6 +11,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.studikasus5.screen.DaftarScreen
+import com.example.studikasus5.screen.DetailScreen
+import com.example.studikasus5.screen.LoginScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

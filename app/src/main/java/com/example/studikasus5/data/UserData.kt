@@ -1,4 +1,4 @@
-package com.example.studikasus5
+package com.example.studikasus5.data
 
 data class UserData(
     val nim: String = "",

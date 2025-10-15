@@ -1,4 +1,4 @@
-package com.example.studikasus5
+package com.example.studikasus5.screen
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -9,11 +9,11 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 
 @Composable
-fun DaftarScreen(navController: NavController) {
+fun LoginScreen(navController: NavController) {
     var nim by remember { mutableStateOf("") }
     var nama by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
-    var alamat by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier
@@ -22,23 +22,33 @@ fun DaftarScreen(navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Text("FORM PENDAFTARAN", style = MaterialTheme.typography.titleLarge)
+        Text("LOGIN", style = MaterialTheme.typography.headlineSmall)
         Spacer(Modifier.height(16.dp))
 
-        OutlinedTextField(value = nim, onValueChange = { nim = it }, label = { Text("NIM") })
-        Spacer(Modifier.height(8.dp))
         OutlinedTextField(value = nama, onValueChange = { nama = it }, label = { Text("Nama") })
+        Spacer(Modifier.height(8.dp))
+        OutlinedTextField(value = nim, onValueChange = { nim = it }, label = { Text("NIM") })
         Spacer(Modifier.height(8.dp))
         OutlinedTextField(value = email, onValueChange = { email = it }, label = { Text("Email") })
         Spacer(Modifier.height(8.dp))
-        OutlinedTextField(value = alamat, onValueChange = { alamat = it }, label = { Text("Alamat") })
+        OutlinedTextField(value = password, onValueChange = { password = it }, label = { Text("Password") })
 
         Spacer(Modifier.height(16.dp))
         Button(
-            onClick = { navController.navigate("detail/$nim/$nama/$email") },
+            onClick = {
+                navController.navigate("detail/$nim/$nama/$email")
+            },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("SIMPAN")
+            Text("LOGIN")
+        }
+
+        Spacer(Modifier.height(8.dp))
+        Button(
+            onClick = { navController.navigate("daftar") },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("DAFTAR")
         }
     }
 }
