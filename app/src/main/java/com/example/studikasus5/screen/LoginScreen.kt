@@ -6,14 +6,15 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.studikasus5.viewmodel.MainViewModel
 
 @Composable
-fun LoginScreen(navController: NavController) {
-    var nim by remember { mutableStateOf("") }
-    var nama by remember { mutableStateOf("") }
+fun LoginScreen(navController: NavController, mainViewModel: MainViewModel = viewModel()) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var loginError by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier
@@ -25,18 +26,27 @@ fun LoginScreen(navController: NavController) {
         Text("LOGIN", style = MaterialTheme.typography.headlineSmall)
         Spacer(Modifier.height(16.dp))
 
-        OutlinedTextField(value = nama, onValueChange = { nama = it }, label = { Text("Nama") })
-        Spacer(Modifier.height(8.dp))
-        OutlinedTextField(value = nim, onValueChange = { nim = it }, label = { Text("NIM") })
-        Spacer(Modifier.height(8.dp))
         OutlinedTextField(value = email, onValueChange = { email = it }, label = { Text("Email") })
         Spacer(Modifier.height(8.dp))
-        OutlinedTextField(value = password, onValueChange = { password = it }, label = { Text("Password") })
+        OutlinedTextField(
+            value = password,
+            onValueChange = { password = it },
+            label = { Text("Password") })
+
+        if (loginError.isNotEmpty()) {
+            Spacer(Modifier.height(8.dp))
+            Text(loginError, color = MaterialTheme.colorScheme.error)
+        }
 
         Spacer(Modifier.height(16.dp))
         Button(
             onClick = {
-                navController.navigate("detail/$nim/$nama/$email")
+                val user = mainViewModel.login(email, password)
+                if (user != null) {
+                    navController.navigate("detail/${user.nim}/${user.nama}/${user.email}")
+                } else {
+                    loginError = "Login gagal. Periksa email dan password."
+                }
             },
             modifier = Modifier.fillMaxWidth()
         ) {

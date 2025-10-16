@@ -19,9 +19,9 @@ fun DetailScreen(navController: NavController, nim: String, nama: String, email:
     ) {
         Text("Detail Mahasiswa", style = MaterialTheme.typography.titleLarge)
         Spacer(Modifier.height(16.dp))
-        Text("235150407111046 : $nim")
-        Text("Lathiifahtus Sunniyyah : $nama")
-        Text("lathiifahtuss@student.ub.ac.id : $email")
+        Text("NIM: $nim")
+        Text("Nama: $nama")
+        Text("Email: $email")
 
         Spacer(Modifier.height(24.dp))
         Button(onClick = { navController.navigate("daftar") }) {

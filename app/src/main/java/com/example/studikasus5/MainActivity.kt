@@ -1,4 +1,4 @@
-package com.example.studikasus5.ui.theme
+package com.example.studikasus5
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -11,15 +11,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.studikasus5.screen.DaftarScreen
 import com.example.studikasus5.screen.DetailScreen
 import com.example.studikasus5.screen.LoginScreen
+import com.example.studikasus5.screen.DaftarScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            // Memanggil fungsi utama aplikasi
             MyApp()
         }
     }
@@ -29,9 +28,7 @@ class MainActivity : ComponentActivity() {
 fun MyApp() {
     MaterialTheme {
         Surface(color = MaterialTheme.colorScheme.background) {
-            // Membuat controller navigasi
             val navController = rememberNavController()
-            // Menjalankan navigasi utama
             AppNavigation(navController)
         }
     }
@@ -43,12 +40,10 @@ fun AppNavigation(navController: NavHostController) {
         navController = navController,
         startDestination = "login"
     ) {
-        // Halaman Login
         composable("login") {
             LoginScreen(navController)
         }
 
-        // Halaman Detail (dengan parameter)
         composable("detail/{nim}/{nama}/{email}") { backStackEntry ->
             val nim = backStackEntry.arguments?.getString("nim") ?: ""
             val nama = backStackEntry.arguments?.getString("nama") ?: ""
@@ -56,7 +51,6 @@ fun AppNavigation(navController: NavHostController) {
             DetailScreen(navController, nim, nama, email)
         }
 
-        // Halaman Daftar
         composable("daftar") {
             DaftarScreen(navController)
         }

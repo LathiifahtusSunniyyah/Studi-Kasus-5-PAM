@@ -6,14 +6,19 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.studikasus5.data.UserData
+import com.example.studikasus5.viewmodel.MainViewModel
 
 @Composable
-fun DaftarScreen(navController: NavController) {
+fun DaftarScreen(navController: NavController, mainViewModel: MainViewModel = viewModel()) {
     var nim by remember { mutableStateOf("") }
     var nama by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var alamat by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    var registerMessage by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier
@@ -32,10 +37,26 @@ fun DaftarScreen(navController: NavController) {
         OutlinedTextField(value = email, onValueChange = { email = it }, label = { Text("Email") })
         Spacer(Modifier.height(8.dp))
         OutlinedTextField(value = alamat, onValueChange = { alamat = it }, label = { Text("Alamat") })
+        Spacer(Modifier.height(8.dp))
+        OutlinedTextField(value = password, onValueChange = { password = it }, label = { Text("Password") })
+
+        if (registerMessage.isNotEmpty()) {
+            Spacer(Modifier.height(8.dp))
+            Text(registerMessage, color = MaterialTheme.colorScheme.primary)
+        }
 
         Spacer(Modifier.height(16.dp))
         Button(
-            onClick = { navController.navigate("detail/$nim/$nama/$email") },
+            onClick = { val newUser = UserData(nim, nama, email, alamat, password)
+                val success = mainViewModel.registerUser(newUser)
+                registerMessage = if (success) {
+
+                    navController.navigate("detail/$nim/$nama/$email")
+                    "Pendaftaran berhasil!"
+                } else {
+                    "Pendaftaran gagal. Email sudah terdaftar."
+                }
+            },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("SIMPAN")
